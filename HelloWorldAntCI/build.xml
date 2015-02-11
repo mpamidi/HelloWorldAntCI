@@ -1,4 +1,4 @@
-<project name="Sample usage of Salesforce Ant tasks" default="test" basedir="." xmlns:sf="antlib:com.salesforce">
+<project name="Sample usage of Salesforce Ant tasks" basedir="." xmlns:sf="antlib:com.salesforce">
 
     <property file="build.properties"/>
     <property environment="env"/>
@@ -9,7 +9,14 @@
         </classpath>
     </taskdef>
 
-    <!-- Test out deploy and retrieve verbs for package 'mypkg' -->
+    <target name="deploy">
+	      <sf:deploy username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" maxPoll="${sf.maxPoll}" deployRoot="${basedir}/src" rollbackOnError="true"/>
+    </target>
+
+	<target name="get">
+		<sf:retrieve username="${sf.devusername}" password="${sf.devpassword}" serverurl="${sf.serverurl}" maxPoll="${sf.maxPoll}" retrieveTarget="${basedir}/src" packageNames="HelloWorldISV"/>
+    </target>
+
     <target name="test">
       <!-- Upload the contents of the "mypkg" package -->
       <sf:deploy username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" maxPoll="${sf.maxPoll}" deployRoot="${basedir}/src" rollbackOnError="true"/>
